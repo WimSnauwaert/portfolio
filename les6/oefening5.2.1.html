@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+
+  <!-- Always force latest IE rendering engine (even in intranet) & Chrome Frame 
+       Remove this if you use the .htaccess -->
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+
+  <title>oefening5.2</title>
+  <meta name="description" content="" />
+  <meta name="author" content="Steven" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<style type="text/css">
+	body{
+		background: #000;
+		color:#ccc;
+		text-align:center;
+	}
+	ul.fotolijst{
+		list-style-type : none;
+		padding:0;
+		margin:0;
+		text-align:center;
+		
+	}
+	ul.fotolijst li{
+		float:left;
+		width:100px;
+		margin: 0px 1px 0px 1px;
+	}
+	ul.fotolijst li img{
+
+		
+		border: 2px solid #777;
+		padding: 0px;
+		border-radius: 5px;
+		
+	}
+	#galerij{
+		text-align:center;
+	}
+	#frame{
+		width: 939px;
+		height: 625px;
+		margin: 10px 0px 10px 0px;
+		border: 3px solid #ccc;
+		overflow:hidden;
+		border-radius: 5px;
+
+	}
+</style>
+<script src="../JSLib/jquery-1.12.1.min.js"></script>
+<script>
+    "use strict";
+    /*global $ */
+	var fotoArray = [
+		"f5133cb1705d259b32e084b0c1e531e5_large.jpg", "4572cf86008755df12e3f13e8caf4f0a_large.jpg", "a9c5493274fbef70b51289dd47cc86b3_large.jpg", "95f700eb7d067cf3090de50535556554_large.jpg", "bfa91d008c03e910c864484c14412d50_large.jpg", "6a828e18be6a567567f304350ee14cf7_large.jpg"
+	];
+	var urlPrefix = "http://img.mobypicture.com/";
+
+	$(document).ready(function () {
+        var i, foto, bron, thumb;
+		$("#galerij").html("<div id='frame'><img /><\/div>" +
+					"<ul class='fotolijst'><\/ul>");
+		
+		// we plaatsen alvast 1 foto in de galerij :
+		$("#frame img").attr("src", urlPrefix + fotoArray[0]);
+		
+		// thumbnails aanmaken (in een lijst plaatsen)
+		for (i = 0; i < fotoArray.length; i += 1) {
+			foto = fotoArray[i];
+			bron = urlPrefix + foto;
+			// op de website van buienradar worden de thumbnails bijgehouden
+			// met de zelfde naam van de originele foto, maar achteraan
+			// wordt er "_t1" aan de naam toegevoegd, voor de extensie
+			
+			// update : het systeem op buienradar is veranderd. Nu eindigen de namen
+         // van de grote afbeeldingen met _large.jpg en de kleine versies met
+         // _square.jpg
+         
+			// replace vervangt de eerste parameter waar die in de bron voorkomt
+			// door de 2e parameter
+			thumb = bron.replace("_large.jpg", "_square.jpg");
+			
+			// merk op dat we de index van de afbeelding in de array meegeven als
+			// het rel attribuut van de afbeelding
+			$(".fotolijst").append("<li><a href='#' data-rel='" + i + "'><img src='" + thumb + "'><\/a><\/li>");
+
+			
+		}
+		
+		function soFadeImg() {
+			// deze functie zorgt voor het vervangen en het animeren van 
+			// de nieuwe afbeelding
+			
+			// haal de volgorde van deze foto op uit het rel attribuut, en
+			// zet dit om naar een getal, zodat we er met kunnen werken om
+			// de elementen uit de array te kunnen halen
+			var index = parseInt($(this).attr("data-rel"), 10),
+                bron = urlPrefix + fotoArray[index];
+			// verander de achtergrond afbeelding van het frame naar de huidige afbeelding in het frame
+			$("#frame").css("background-image", "url(" + $("#frame img").attr("src") + ")");
+			// vervang de html van het frame door een afbeelding die eerst verborgen is
+			$("#frame").html("<img style='display:none;'>");
+			// geef dit img nu de juiste bron
+			$("#frame img").attr("src", bron);
+			// maak nu deze afbeelding langzaam zichbaar dmv fadeIn()
+			$("#frame img").fadeIn("slow");
+		}
+		
+		// de kleine foto's aanklikbaar maken zodat de grote versie verschijnt
+		$(".fotolijst a").on("click", function(){
+            var index = parseInt($(this).attr("data-rel"), 10),
+                bron = urlPrefix + fotoArray[index];
+            $("#frame").css("background-image", "url("+$("#frame img").attr("src")+")");
+            
+            $("#frame").html("<img style='display:none;'/>");
+            $("#frame img").attr("src", bron);
+            
+            var effect = 1 + Math.round(Math.random() * 4);
+            switch(effect)
+            {
+                case 1: effect1($("#frame img")); break;
+                case 2: effect2($("#frame img")); break;
+                case 3: effect3($("#frame img")); break;
+                case 4: effect4($("#frame img")); break;
+            }
+        });
+		
+		// de kleine foto's ook activeren als de muis er over gaat
+		//$(".fotolijst a").on("mouseenter", soFadeImg);
+        
+        function effect1(img)
+        {
+            img.css("height","0");
+            img.animate
+            ({
+                opacity: "show",
+                height: "100%"
+            }, "slow");
+        }
+        
+        function effect2(img)
+        {
+            img.css("margin-left", "-1100px");
+            img.animate
+            ({
+                opacity: "show",
+                "margin-left": "0"
+            }, "slow");
+        }
+        
+        function effect3(img)
+        {
+            img.css("margin-top","-400px")
+            img.animate
+            ({
+                opacity: "show",
+                "margin-top": "0"
+            }, "slow");
+        }
+        
+        function effect4(img)
+        {
+            img.css("width", "300%");
+            img.css("height", "300%");
+            img.css("margin-top", "-300px");
+            img.css("margin-left", "-512px");
+            img.animate
+            ({
+                opacity: "show",
+                "width": "100%",
+                "height": "100%",
+                "margin-top": "0",
+                "margin-left": "0"
+            }, "slow");
+        }
+					
+	});
+	
+</script>
+</head>
+
+<body>
+  <div>
+    <header>
+    	
+      <h1>jQuery - de Basis - oefening5.2 : fotogalerij</h1>
+
+    </header>
+    
+    <div id="galerij"> </div>
+  </div>
+</body>
+</html>

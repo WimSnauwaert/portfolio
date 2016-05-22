@@ -1,0 +1,143 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Naamloos document</title>
+</head>
+<script>
+
+// eerste oefening    
+    
+function optellen(waarde1,waarde2)
+{
+	return waarde1 + waarde2;
+}
+
+function aftrekken(waarde1,waarde2)
+{
+	return waarde1 - waarde2;
+}
+
+function vermenigvuldigen(waarde1,waarde2)
+{
+	return waarde1 * waarde2;
+}
+
+function delen(waarde1,waarde2)
+{
+	return waarde1 / waarde2;
+}
+
+document.write("Plus: " + optellen(10,5) + '<br>');
+document.write("Min: " + aftrekken(10,5) + '<br>');
+document.write("Maal: " + vermenigvuldigen(10,5) + '<br>');
+document.write("Deel: " + delen(10,5) + '<br>');
+
+//tweede oefening    
+    
+function reken()
+{
+	this.waarde1 = 0;
+	this.waarde2 = 0;
+	
+	this.Optellen = function()
+	{
+		return this.waarde1 + this.waarde2;
+	}
+	
+	this.Aftrekken = function()
+	{
+		return this.waarde1 - this.waarde2;
+	}
+	
+	this.Vermenigvuldigen = function()
+	{
+		return this.waarde1 * this.waarde2;
+	}
+	
+	this.Delen = function()
+	{
+		return this.waarde1 / this.waarde2;
+	}
+}   
+    
+var test = new reken();
+test.waarde1 = 10;
+test.waarde2 = 5;
+
+var optellen = test.Optellen();
+var aftrekken = test.Aftrekken();
+var vermenigvuldigen = test.Vermenigvuldigen();
+var delen = test.Delen();
+
+document.write('<br>' + "Plus prototype: " + optellen);
+document.write('<br>' + "Min prototype: " + aftrekken);
+document.write('<br>' + "Maal prototype: " + vermenigvuldigen);
+document.write('<br>' + "Deel prototype: " + delen);
+
+
+// derde oefening
+function RekenmachienArray()
+    {
+     this.getallen = new Array();
+    
+    this.plus = function()
+	{
+        var totaal=0;
+     for(var i = 0; i < this.getallen.length;i++)
+     {
+         totaal += this.getallen[i];
+     }
+        return totaal;
+	}  
+    this.min = function()
+	{
+		var totaal=0;
+     for(var i = 0; i < this.getallen.length;i++)
+     {
+         totaal -= this.getallen[i];
+     }
+        return totaal;
+	}
+	
+	this.maal = function()
+	{
+		var totaal=this.getallen[0];
+     for(var i = 1; i < this.getallen.length;i++)
+     {
+         totaal = totaal * this.getallen[i];
+     }
+        return totaal;
+	}
+	
+	this.deel = function()
+	{
+		var totaal=this.getallen[0];
+     for(var i = 1; i < this.getallen.length;i++)
+     {
+         totaal = totaal / this.getallen[i];
+     }
+        return totaal;
+	}
+    }
+    
+var rekenmachine= new RekenmachienArray();
+rekenmachine.getallen.push(5);
+rekenmachine.getallen.push(8);
+rekenmachine.getallen.push(7);
+    
+var arrayPlus = rekenmachine.plus();
+var arrayMin = rekenmachine.min();
+var arrayMaal = rekenmachine.maal();
+var arrayDeel = rekenmachine.deel();
+    
+document.write('<br> <br>' + "Derde oefening plus: " + arrayPlus);
+document.write('<br>' + "Derde oefening plus: " + arrayMin);
+document.write('<br>' + "Derde oefening plus: " + arrayMaal);
+document.write('<br>' + "Derde oefening plus: " + arrayDeel);
+    
+</script>
+
+<body>
+</body>
+</html>
